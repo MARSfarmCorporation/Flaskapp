@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+
+        <title>GIF</title>
+
+        <style>
+            .content {
+              max-width: 500px;
+              margin: auto;
+            }
+        </style>
+
+    </head>
+
+    <body>
+
+      <div class="content">  
+        
+        <h4>Please enter a desired time interval of the images used <br> to generate the gif (this may take some time):</h4>
+  
+          <form action='/gif' method="post">
+            <input name='interval'>
+            <input type='submit' Value='Submit'>
+          </form>
+          
+        {{ gif_name }}
+
+        <img src="/static/gif/{{ gif_name }}" alt="Not yet Available" style="width:480px;height:640px;">
+
+        <br>
+        
+        <a href="/"><button class='btn-default'>Back</button></a>
+  
+      </div>  
+    
+    </body>
+
+</html>

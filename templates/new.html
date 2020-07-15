@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>MARSfarm</title>
+    <style>
+      .content{
+        text-align:center;
+        max-width: 500px;
+        margin:auto;
+      }
+      p {text-align:center; font-size:20px; margin-top: 200px;}
+    </style>
+  </head>
+
+  <body>
+    <div class="content">
+      <p> Hi {{ user }}, it seems like this is your first time logging in with {{ email }}, would you like to create your account?</p>
+      <br>
+      <br>
+      <button><a href="/register/{{ user }}/{{ email }}">Yes</a></button>
+      <button><a href="/">Back</a></button>
+    </div>
+  </body>
+</html>

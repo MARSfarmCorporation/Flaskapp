@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+      <title>MARSfarm</title>
+      <style>
+        .content {
+          max-width: 500px;
+          margin: auto;
+          text-align: center;
+        }
+    </style>
+  </head>
+
+  <body class='content'>
+      <p>Please enter the requested information and click "Submit". Click "Main Page" after you are finished.</p>
+      <br>
+      <br>
+      <form action='/register/{{user}}/{{email}}' method="post">
+        <p> School: </p>
+        <input name='school'>
+        <br>
+        <p> Device: </p>
+        <input name='device'>
+        <br>
+        <br>
+        <input type='submit' Value='Submit'>
+      </form>
+      <br>
+      <br>
+      <p> {{ result }}</p>
+      <button><a href="/reception/{{user}}/{{email}}" >Main Page</a></button>
+  </body>
+</html>

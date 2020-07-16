@@ -22,13 +22,11 @@
       
       <h3> Fill the following form to submit a phenotype record to CouchDB. </h3>
 
-      <form action="/submit/form" method="post">
+      <form action="/submit/{{user}}" method="post">
 
         <p> Database: <input name='db_name'> </p>
         
         <p> Timestamp: <input name='timestamp' value='06/22/20 13:00PM'> </p>
-
-        <p> Name: <input name='usr_name'> </p>
 
         <p> Plot: <input name='plot'> </p>
 
@@ -41,7 +39,7 @@
                     <option value="Root">Root</option>
                     </select></p>
 
-        <p> Observation type: <input name='type'> </p>
+        <p> Attribute: <input name='type'> </p>
 
         <p> Value: <input name='value'> </p>
 

@@ -26,11 +26,6 @@ app = Flask(__name__)
 def entry_point():
   return render_template("main.html")
 
-#sign in page
-@app.route('/signin')
-def sign_in():
-  return render_template("signin.html")
-
 #no sign in page
 @app.route('/visitor')
 def visitor_page():

@@ -168,15 +168,15 @@ def generate():
 
 #Pages resposible for creating
 #phenotype observation record
-@app.route('/submit')
-def submit_entry_point():
-  return render_template('submit.html')
+@app.route('/submit/<user>')
+def submit_entry_point(user):
+  return render_template('submit.html', user=user)
 
-@app.route('/submit/form', methods=['POST'])
-def submit_form():
+@app.route('/submit/<user>', methods=['POST'])
+def submit_form(user):
   
   db_name = request.form['db_name']
-  usr_name = request.form['usr_name']
+  usr_name = user
   timestamp = request.form['timestamp']
   plot = request.form['timestamp']
   trial = request.form['trial']

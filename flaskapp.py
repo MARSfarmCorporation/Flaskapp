@@ -10,26 +10,24 @@ Last Modified: 6/29/2020
 import string, json
 
 #Third party library
-from flask import Flask, render_template, request, send_file, jsonify
+from flask import Flask, render_template, request, send_file, jsonify, redirect
 
 #local library
 from s3 import count_img, show_latest, download_file
-from user import verify_usr, save_rec, retrieve_rec
-from CouchDB import sensor_latest, count_records, get_tmp_json, get_co2_json, get_hum_json
+from user import verify_usr, save_rec, retrieve_rec, retrieve_db
+from CouchDB import sensor_latest, count_records, get_tmp_json, get_co2_json, get_hum_json, tmp_rec
 from img2gif import generate_gif
 from submit import submit
 
 app = Flask(__name__)
 
+
+
+
 #The starting page
 @app.route('/')
 def entry_point():
   return render_template("main.html")
-
-#no sign in page
-@app.route('/visitor')
-def visitor_page():
-  return render_template("visitor.html")
 
 #verify if user exist or not and render page accordingly
 @app.route('/reception/<user>/<email>', methods = ['GET'])
@@ -39,9 +37,45 @@ def usr_main(user, email):
     return render_template("new.html", user=user, email=email)
   else:
     data = retrieve_rec(email)
-    school = data[0]
-    device = data[1]
-    return render_template("reception.html", user=user, email=email, school=school, device=device)
+    return render_template("reception.html", user=user, email=email)
+
+#serve the humidity dashboard
+@app.route('/humidity/<user>/<email>')
+def humidity(user, email):
+  return render_template("humidity.html", user=user, email=email)
+
+#serve the temperature dashboard
+@app.route('/temperature/<user>/<email>')
+def temperature(user, email):
+  return render_template("temperature.html", user=user, email=email)
+
+@app.route('/temperature/<user>/<email>/<limit>')
+def rec_temperature(user, email, limit):
+  db = retrieve_db(email)
+  
+  result = tmp_rec(db[0], limit)
+  
+  return render_template("temperature.html", user=user, email=email, result=result)
+
+#serve the co2 dashboard
+@app.route('/co2/<user>/<email>')
+def co2(user, email):
+  return render_template("co2.html", user=user, email=email)
+
+#serve the picture dashboard
+@app.route('/picture/<user>/<email>')
+def picture(user, email):
+  return render_template("picture.html", user=user, email=email)
+
+#serve the temperature dashboard
+@app.route('/experiment/<user>/<email>')
+def experiment(user, email):
+  return render_template("experiment.html", user=user, email=email)
+
+#serve the setting dashboard
+@app.route('/setting/<user>/<email>')
+def setting(user, email):
+  return render_template("setting.html", user=user, email=email)
 
 
 #registration information page
@@ -59,6 +93,16 @@ def usr_register(user, email):
     return render_template("registration.html", user=user, email=email, result=result)
   else:
     return render_template("registration.html", user=user, email=email)
+
+
+
+
+
+
+
+
+
+
 
 #Pages responsible for retriving
 #pictures from Amazon S3

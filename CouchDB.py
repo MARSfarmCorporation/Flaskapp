@@ -13,6 +13,22 @@ import json
 from datetime import datetime
 from key import couch_access
 
+def tmp_rec(db_name, limit):
+
+    server = couch_access()
+    db = server[db_name]
+    result = []
+
+    payload={"selector":{"status.status_qualifier":"Success", "activity_type":"Environment_Observation", 
+             "subject.name":"Air","subject.attribute.name": "Temperature"}, "fields":["start_date.timestamp", "subject.attribute.value"],
+             "sort":[{"start_date.timestamp":"desc"}], "limit":int(limit)}        
+
+    data = db.find(payload)
+
+    for row in data:
+        result.append(row["start_date"]["timestamp"] + ":" + row["subject"]["attribute"]["value"])
+    return result
+
 
 
 #return the number of records in the database
@@ -109,4 +125,4 @@ def sensor_latest(db_name):
     
 
 if __name__ == "__main__":
-    print(get_json())
+    print(tmp_rec("jackie_mvp_2", 24))

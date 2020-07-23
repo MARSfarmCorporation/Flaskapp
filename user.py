@@ -8,13 +8,13 @@ Last Modified: 7/14/2020
 '''
 
 from couchdb import Server
+from key import couch_access
 import json
 
 def verify_usr(email):
 
-    url = "https://admin:marsfarm@data.marsfarm.io:6984/"
+    server = couch_access()
     db_name = "users"
-    server = Server(url)
     db = server[db_name]
 
     payload={"selector":{"Email":email}, "limit": 1}
@@ -29,18 +29,15 @@ def verify_usr(email):
 
 def save_rec(name, email, school, device):
 
-    url = "https://admin:marsfarm@data.marsfarm.io:6984/"
+    server = couch_access()
     db_name = "users"
-    server = Server(url)
     db = server[db_name]
-
     doc_id, doc_rev = db.save({"Name": name, "Email": email, "School": school, "Device": device})
 
 def retrieve_rec(email):
 
-    url = "https://admin:marsfarm@data.marsfarm.io:6984/"
+    server = couch_access()
     db_name = "users"
-    server = Server(url)
     db = server[db_name]
 
     payload={"selector":{"Email":email}, "limit": 1}
@@ -54,6 +51,22 @@ def retrieve_rec(email):
     
     return result
 
+def retrieve_db(email):
+
+    server = couch_access()
+    db_name = "users"
+    db = server[db_name]
+
+    payload={"selector":{"Email":email}, "limit": 1}
+
+    data = db.find(payload)
+
+    result=[]
+    for row in data:
+        result.append(row["Database"])
+    
+    return result
+
 
 if __name__ == "__main__":
-    print(retrieve_rec("jackie@marsfarm.io"))
+    print(retrieve_db("jackie@marsfarm.io")[0])

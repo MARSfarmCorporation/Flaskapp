@@ -4,32 +4,27 @@
   <head>
     <title>MARSfarm</title>
     <style>
-      .content{
+      .signin{
         position: absolute;
-        top: 40%;
-        left: 45%;
-        right: 55%;
+        top: 50%;
+        left: 44%;
       }
       .logo{
-        position:absolute;
-        top: 10%;
-        left: 45%;
-        width: 100px;
-        height: 100px;
+        position: absolute;
+        top: 20%;
+        left: 20%;
       }
-      h1 {margin-top:200px;text-align:center; color:green;}
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
     <meta name="google-signin-client_id" content="504897881243-potvgv2v08c3fc71f4mcciut0un009et.apps.googleusercontent.com">
   </head>
 
   <body>
-      <img src="/static/icon/logo.jpg" class="logo"/>
-      <h1>Welcome to MARSfarm Web Application</h1>
-      <div class="content">
-        <a class="g-signin2" data-onsuccess="onSignIn">Sign in with Google</a>
-      </div>
+
+      <img src="/static/icon/icon.svg" class="logo"/>
+     
+      <div id="my-signin2" class="signin"></div>
 
       <script>
         function onSignIn(googleUser) {
@@ -37,8 +32,20 @@
           var name = profile.getName();
           var email = profile.getEmail();
 
-          alert("Welcome " + name + ", you are logged in");
-          window.location.assign("http://app.marsfarm.io/reception/" + name + "/" + email);
+          alert("Welcome " + name +", you are logged in.");
+          
+          window.location.assign("http://app.marsfarm.io/reception/" + name + "/" + email); 
+        }
+
+        function renderButton() {
+          gapi.signin2.render('my-signin2', {
+            'scope': 'profile email',
+            'width': 240,
+            'height': 50,
+            'longtitle': true,
+            'theme': 'dark',
+            'onsuccess': onSignIn,
+          });
         }
       </script>      
   </body>

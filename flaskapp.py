@@ -37,7 +37,10 @@ def usr_main(user, email):
     return render_template("new.html", user=user, email=email)
   else:
     data = retrieve_rec(email)
-    return render_template("reception.html", user=user, email=email)
+    latest = show_latest(data[1])
+    s3 = data[2]
+    link = s3 + latest
+    return render_template("reception.html", user=user, email=email, link=link)
 
 #serve the humidity dashboard
 @app.route('/humidity/<user>/<email>')

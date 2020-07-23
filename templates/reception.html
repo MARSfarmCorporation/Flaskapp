@@ -81,6 +81,13 @@
         top: 94.57%;
         bottom: 1.63%;
       }
+      .img_preview{
+        position: absolute;
+        width: 398px;
+        height: 309px;
+        left: 119px;
+        top: 14%;
+      }
     </style>
   </head>
 
@@ -99,7 +106,7 @@
       <img src="/static/navigation/profile.svg" class="user"/>
     </div>
 
-    {{ result }}
+    <img src="{{link}}" class="img_preview">
   </body>
 
 </html>

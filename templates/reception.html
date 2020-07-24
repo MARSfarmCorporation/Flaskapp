@@ -3,84 +3,6 @@
 
   <head>
     <style>
-      .NavBar{
-        position: absolute;
-        float: left;
-        width: 85px;
-        height: 1105px;
-        left: 0px;
-        top: 0px;
-      }
-      .background{
-        position: absolute;
-        left: 0%;
-        right: 0%;
-        top: 0%;
-        bottom: 0%;
-      }
-      .icon{
-        position: absolute;
-        left: 23.53%;
-        right: 27.06%;
-        top: 1.36%;
-        bottom: 94.84%;
-      }
-      .home{
-        position: absolute;
-        left: 23.53%;
-        right: 27.06%;
-        top: 7.24%;
-        bottom: 88.96%;
-      }
-      .humidity{
-        position: absolute;
-        left: 23.53%;
-        right: 27.06%;
-        top: 12.31%;
-        bottom: 83.89%;
-      }
-      .co2{
-        position: absolute;
-        left: 23.53%;
-        right: 27.06%;
-        top: 17.38%;
-        bottom: 78.82%;
-      }
-      .temperature{
-        position: absolute;
-        left: 23.53%;
-        right: 27.06%;
-        top: 22.44%;
-        bottom: 73.76%;
-      }
-      .picture{
-        position: absolute;
-        left: 23.53%;
-        right: 27.06%;
-        top: 27.51%;
-        bottom: 68.69%;
-      }
-      .experiment{
-        position: absolute;
-        left: 23.53%;
-        right: 27.06%;
-        top: 32.58%;
-        bottom: 63.62%;
-      }
-      .setting{
-        position: absolute;
-        left: 23.53%;
-        right: 27.06%;
-        top: 37.65%;
-        bottom: 58.55%;
-      }
-      .user{
-        position: absolute;
-        left: 24.71%;
-        right: 25.88%;
-        top: 94.57%;
-        bottom: 1.63%;
-      }
       .img_preview{
         position: absolute;
         width: 398px;
@@ -88,7 +10,15 @@
         left: 119px;
         top: 14%;
       }
+      .signin{
+        position:absolute;
+        right: 0.5%;
+        top: 0.5%;
+      }
     </style>
+    <link rel="stylesheet" href="/static/style/nav_bar.css">
+    <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
+    <meta name="google-signin-client_id" content="504897881243-potvgv2v08c3fc71f4mcciut0un009et.apps.googleusercontent.com">
   </head>
 
   <body>
@@ -107,6 +37,29 @@
     </div>
 
     <img src="{{link}}" class="img_preview">
+
+    <div class="signin">
+    <div id="my-signin2" class="signin"></div>
+    </div>
+
+    <script>
+      function onSignIn(googleUser) {
+        var profile = googleUser.getBasicProfile();
+        var name = profile.getName();
+        var email = profile.getEmail();  
+      }
+
+      function renderButton() {
+        gapi.signin2.render('my-signin2', {
+          'scope': 'profile email',
+          'width': 120,
+          'height': 25,
+          'longtitle': true,
+          'theme': 'dark',
+          'onsuccess': onSignIn,
+        });
+      }
+    </script>     
   </body>
 
 </html>

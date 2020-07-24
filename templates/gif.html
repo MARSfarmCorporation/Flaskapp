@@ -21,7 +21,7 @@
         
         <h4>Please enter a desired time interval of the images used <br> to generate the gif (this may take some time):</h4>
   
-          <form action='/gif' method="post">
+          <form action='/gif/{{email}}' method="post">
             <input name='interval'>
             <input type='submit' Value='Submit'>
           </form>
@@ -32,6 +32,8 @@
 
         <br>
         
+        <a href="/download/{{ gif_name }}"><button class='btn-default'>Download!</button></a> 
+
         <a href="/"><button class='btn-default'>Back</button></a>
   
       </div>  

@@ -46,8 +46,9 @@ def retrieve_rec(email):
 
     result = []
     for row in data:
-        result.append(row["School"])
-        result.append(row["Device"])
+        result.append(row["Database"])
+        result.append(row["S3"])
+        result.append(row["S3_link"])
     
     return result
 

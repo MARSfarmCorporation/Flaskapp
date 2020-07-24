@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <style>
+      .NavBar{
+        position: absolute;
+        float: left;
+        width: 85px;
+        height: 1105px;
+        left: 0px;
+        top: 0px;
+      }
+      .background{
+        position: absolute;
+        left: 0%;
+        right: 0%;
+        top: 0%;
+        bottom: 0%;
+      }
+      .icon{
+        position: absolute;
+        left: 23.53%;
+        right: 27.06%;
+        top: 1.36%;
+        bottom: 94.84%;
+      }
+      .home{
+        position: absolute;
+        left: 23.53%;
+        right: 27.06%;
+        top: 7.24%;
+        bottom: 88.96%;
+      }
+      .humidity{
+        position: absolute;
+        left: 23.53%;
+        right: 27.06%;
+        top: 12.31%;
+        bottom: 83.89%;
+      }
+      .co2{
+        position: absolute;
+        left: 23.53%;
+        right: 27.06%;
+        top: 17.38%;
+        bottom: 78.82%;
+      }
+      .temperature{
+        position: absolute;
+        left: 23.53%;
+        right: 27.06%;
+        top: 22.44%;
+        bottom: 73.76%;
+      }
+      .picture{
+        position: absolute;
+        left: 23.53%;
+        right: 27.06%;
+        top: 27.51%;
+        bottom: 68.69%;
+      }
+      .experiment{
+        position: absolute;
+        left: 23.53%;
+        right: 27.06%;
+        top: 32.58%;
+        bottom: 63.62%;
+      }
+      .setting{
+        position: absolute;
+        left: 23.53%;
+        right: 27.06%;
+        top: 37.65%;
+        bottom: 58.55%;
+      }
+      .user{
+        position: absolute;
+        left: 24.71%;
+        right: 25.88%;
+        top: 94.57%;
+        bottom: 1.63%;
+      }
+      .content{
+        position: absolute;
+        left: 45%;
+        top: 20%;
+      }
+      .table{
+        position: absolute;
+        left: 40%;
+        top: 40%;
+        max-width: 450px;
+      }
+    </style>
+  </head>
+
+  <body>
+
+    <div class="NavBar">
+      <img src="/static/navigation/background.svg" class="background"/>
+      <img src="/static/navigation/icon.svg" class="icon"/>
+      <a href="/reception/{{user}}/{{email}}"><img src="/static/navigation/home_white.svg" class="home"/></a>
+      <a href="/humidity/{{user}}/{{email}}"><img src="/static/navigation/humidity.svg" class="humidity"/></a>
+      <a href="/co2/{{user}}/{{email}}"><img src="/static/navigation/co2.svg" class="co2"/></a>
+      <img src="/static/navigation/temperature_red.svg" class="temperature"/></a>
+      <a href="/picture/{{user}}/{{email}}"><img src="/static/navigation/picture.svg" class="picture"/></a>
+      <a href="/experiment/{{user}}/{{email}}"><img src="/static/navigation/experiment.svg" class="experiment"/></a>
+      <a href="/setting/{{user}}/{{email}}"><img src="/static/navigation/setting.svg" class="setting"/></a>
+      <img src="/static/navigation/profile.svg" class="user"/>
+    </div>
+
+    <div class="content">
+      <a href="/temperature/{{user}}/{{email}}/24"><button>24 hour records</button></a>
+      <a href="/temperature/{{user}}/{{email}}/128"><button>7 days records</button></a>
+    </div>
+
+    <div class="table">
+      {{ result }}
+    </div>
+      
+  </body>
+
+</html>
+

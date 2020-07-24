@@ -14,6 +14,22 @@ import boto3
 from key import s3_access
 import string
 
+def get_28_days(bucket):
+
+    s3 = s3_access()
+    count = 0
+    result = []
+
+    for item in s3.list_objects(Bucket=bucket)['Contents']:
+        if count % 12 == 0:
+            result.insert(0, item['Key'])
+        count+=1
+    
+    while len(result) < 28:
+        result.append("None")
+
+    return result
+
 #count number of images in a given bucket
 def count_img(bucket):
     
@@ -50,4 +66,4 @@ def download_file(file_name, bucket):
 
 
 if __name__ == "__main__":
-    download_file("micds2-1/2019_12_20_16_50.jpg" ,"micds")
+    print(get_28_days("dev-jackie-bucket"))

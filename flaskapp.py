@@ -13,13 +13,14 @@ import string, json
 from flask import Flask, render_template, request, send_file, jsonify, redirect
 
 #local library
-from s3 import count_img, show_latest, download_file
+from s3 import count_img, show_latest, download_file, get_28_days
 from user import verify_usr, save_rec, retrieve_rec, retrieve_db
 from CouchDB import sensor_latest, count_records, get_tmp_json, get_co2_json, get_hum_json, tmp_rec
 from img2gif import generate_gif
 from submit import submit
 
 app = Flask(__name__)
+app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 
 
 
@@ -68,7 +69,19 @@ def co2(user, email):
 #serve the picture dashboard
 @app.route('/picture/<user>/<email>')
 def picture(user, email):
-  return render_template("picture.html", user=user, email=email)
+
+  data = retrieve_rec(email)
+  imgs_28 = get_28_days(data[1])
+  s3_link = data[2]
+  
+  return render_template("picture.html", user=user, email=email, s3_link=s3_link,
+                          img_28=imgs_28[0], img_27=imgs_28[1], img_26=imgs_28[2], img_25=imgs_28[3],
+                          img_24=imgs_28[4], img_23=imgs_28[5], img_22=imgs_28[6], img_21=imgs_28[7],
+                          img_20=imgs_28[8], img_19=imgs_28[9], img_18=imgs_28[10], img_17=imgs_28[11],
+                          img_16=imgs_28[12], img_15=imgs_28[13], img_14=imgs_28[14], img_13=imgs_28[15],
+                          img_12=imgs_28[16], img_11=imgs_28[17], img_10=imgs_28[18], img_9=imgs_28[19],
+                          img_8=imgs_28[20], img_7=imgs_28[21], img_6=imgs_28[22], img_5=imgs_28[23],
+                          img_4=imgs_28[24], img_3=imgs_28[25], img_2=imgs_28[26], img_1=imgs_28[27],)
 
 #serve the temperature dashboard
 @app.route('/experiment/<user>/<email>')
@@ -98,6 +111,30 @@ def usr_register(user, email):
     return render_template("registration.html", user=user, email=email)
 
 
+#Page that serves gif
+@app.route('/gif/<email>')
+def gif_entry_point(email):
+  return render_template('gif.html', email=email)
+
+@app.route('/gif/<email>', methods = ['POST'])
+def generate(email):
+
+  rec = retrieve_rec(email)
+  interval = request.form['interval']
+  try:
+    gif_name = generate_gif(interval, rec[1])
+  except Exception as e:
+    gif_name = str(e)
+
+  return render_template('gif.html', gif_name=gif_name)
+
+@app.route("/download/<gif>")
+def download_temp(gif):
+
+  try :
+    return send_file('/home/ubuntu/flaskapp/static/gif/' + gif, as_attachment=True)
+  except Exception as e:
+    return str(e)
 
 
 
@@ -105,8 +142,7 @@ def usr_register(user, email):
 
 
 
-
-
+'''
 #Pages responsible for retriving
 #pictures from Amazon S3
 @app.route('/images')
@@ -235,7 +271,7 @@ def submit_form(user):
     rec = str(e)
     
   return render_template('submit.html', rec=rec)
-
+'''
 
 
 

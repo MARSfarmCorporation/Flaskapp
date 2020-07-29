@@ -2,83 +2,25 @@
 <html>
 
   <head>
+    <link rel="stylesheet" href="/static/style/nav_bar.css">
+    <link rel="stylesheet" href="/static/style/dashboard_humidity.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="/static//javascript/chart.js"></script>
     <style>
-      .NavBar{
+      .chart{
         position: absolute;
-        width: 85px;
-        height: 1105px;
-        left: 0px;
-        top: 0px;
+        width: 1230px;
+        height: 700px;
+        left: 10%;
+        top: 10%;
       }
-      .background{
+      .gray_box{
         position: absolute;
-        left: 0%;
-        right: 0%;
-        top: 0%;
-        bottom: 0%;
-      }
-      .icon{
-        position: absolute;
-        left: 23.53%;
-        right: 27.06%;
-        top: 1.36%;
-        bottom: 94.84%;
-      }
-      .home{
-        position: absolute;
-        left: 23.53%;
-        right: 27.06%;
-        top: 7.24%;
-        bottom: 88.96%;
-      }
-      .humidity{
-        position: absolute;
-        left: 23.53%;
-        right: 27.06%;
-        top: 12.31%;
-        bottom: 83.89%;
-      }
-      .co2{
-        position: absolute;
-        left: 23.53%;
-        right: 27.06%;
-        top: 17.38%;
-        bottom: 78.82%;
-      }
-      .temperature{
-        position: absolute;
-        left: 23.53%;
-        right: 27.06%;
-        top: 22.44%;
-        bottom: 73.76%;
-      }
-      .picture{
-        position: absolute;
-        left: 23.53%;
-        right: 27.06%;
-        top: 27.51%;
-        bottom: 68.69%;
-      }
-      .experiment{
-        position: absolute;
-        left: 23.53%;
-        right: 27.06%;
-        top: 32.58%;
-        bottom: 63.62%;
-      }
-      .setting{
-        position: absolute;
-        left: 23.53%;
-        right: 27.06%;
-        top: 37.65%;
-        bottom: 58.55%;
-      }
-      .user{
-        position: absolute;
-        left: 24.71%;
-        right: 25.88%;
-        top: 94.57%;
-        bottom: 1.63%;
+        width: 66px;
+        height: 27px;
+        left: 74%;
+        top: 2.5%;
       }
     </style>
   </head>
@@ -96,6 +38,25 @@
       <a href="/experiment/{{user}}/{{email}}"><img src="/static/navigation/experiment.svg" class="experiment"/></a>
       <a href="/setting/{{user}}/{{email}}"><img src="/static/navigation/setting.svg" class="setting"/></a>
       <img src="/static/navigation/profile.svg" class="user"/>
+    </div>
+
+    <a href="/reception/{{user}}/{{email}}"><img src="/static/navigation/backbutton.svg" class="back"></a>
+    <img src="/static/navigation/top_bar.svg" class="top_bar">
+    <img src="/static/svg_humidity_dashboard/Humidity.svg" class="title">
+    <img src="/static/svg_humidity_dashboard/switch.svg" class="switch">
+    <img src="/static/svg_humidity_dashboard/gray_box.svg" class="gray_box">
+    <img src="/static/svg_humidity_dashboard/text1.svg" class="text1">
+    <img src="/static/svg_humidity_dashboard/text2.svg" class="text2">
+    <a href="/humidity/{{user}}/{{email}}/168"><img src="/static/svg_humidity_dashboard/text3.svg" class="text3"></a>
+    <a href="/humidity/{{user}}/{{email}}/all"><img src="/static/svg_humidity_dashboard/text4.svg" class="text4"></a>
+    
+    
+
+    <div class="chart">
+      <canvas id="myChart"></canvas>
+      <script>
+        charting("{{email}}", "24");
+      </script>
     </div>
 
   </body>

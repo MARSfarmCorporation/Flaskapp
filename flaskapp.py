@@ -15,7 +15,7 @@ from flask import Flask, render_template, request, send_file, jsonify, redirect
 #local library
 from s3 import count_img, show_latest, download_file, get_28_days
 from user import verify_usr, save_rec, retrieve_rec, retrieve_db
-from CouchDB import sensor_latest, count_records, get_tmp_json, get_co2_json, get_hum_json, tmp_rec
+from CouchDB import sensor_latest, count_records, get_tmp_json, get_co2_json, get_hum_json, tmp_rec, chart_query
 from img2gif import generate_gif
 from submit import submit
 
@@ -44,9 +44,24 @@ def usr_main(user, email):
     return render_template("reception.html", user=user, email=email, link=link)
 
 #serve the humidity dashboard
-@app.route('/humidity/<user>/<email>')
-def humidity(user, email):
-  return render_template("humidity.html", user=user, email=email)
+@app.route('/humidity/<user>/<email>/<time>')
+def humidity_main(user, email, time):
+  if time == "24":
+    return render_template("humidity.html", user=user, email=email)
+  elif time == "168":
+    return render_template("humidity_7days.html", user=user, email=email)
+  elif time == "all":
+    return render_template("humidity_alltime.html", user=user, email=email)
+
+
+@app.route('/humidity/<email>/chart', methods=["POST"])
+def hum_chart(email):
+
+  db = retrieve_db(email)
+  limit = request.get_data()
+  data = chart_query(db[0], int(limit))
+  
+  return data
 
 #serve the temperature dashboard
 @app.route('/temperature/<user>/<email>')
@@ -65,6 +80,14 @@ def rec_temperature(user, email, limit):
 @app.route('/co2/<user>/<email>')
 def co2(user, email):
   return render_template("co2.html", user=user, email=email)
+
+@app.route('/co2/<user>/<email>', methods=["POST"])
+def co2_chart(user, email):
+
+  limit = request.get_data()
+  data = chart_query("jackie_mvp_2", int(limit))
+  
+  return data
 
 #serve the picture dashboard
 @app.route('/picture/<user>/<email>')
@@ -136,10 +159,13 @@ def download_temp(gif):
   except Exception as e:
     return str(e)
 
+@app.route("/chart", methods=['POST'])
+def get_chart_data():
 
-
-
-
+  limit = request.get_data()
+  data = chart_query("jackie_mvp_2", int(limit))
+  
+  return data
 
 
 '''

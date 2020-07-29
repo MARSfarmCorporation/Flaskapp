@@ -13,6 +13,23 @@ import json
 from datetime import datetime
 from key import couch_access
 
+def chart_query(db_name, limit):
+    
+    server = couch_access()
+    db = server[db_name]
+    result = {}
+
+    payload={"selector":{"status.status_qualifier":"Success", "activity_type":"Environment_Observation", 
+             "subject.name":"Air","subject.attribute.name": "Humidity"}, "fields":["start_date.timestamp", "subject.attribute.value"],
+             "sort":[{"start_date.timestamp":"desc"}], "limit":int(limit)}     
+
+    data = db.find(payload)
+
+    for row in data:
+        result[row["start_date"]["timestamp"]] = row["subject"]["attribute"]["value"]
+
+    return result
+
 def tmp_rec(db_name, limit):
 
     server = couch_access()
@@ -27,6 +44,7 @@ def tmp_rec(db_name, limit):
 
     for row in data:
         result.append(row["start_date"]["timestamp"] + ":" + row["subject"]["attribute"]["value"])
+        
     return result
 
 
@@ -125,4 +143,4 @@ def sensor_latest(db_name):
     
 
 if __name__ == "__main__":
-    print(tmp_rec("jackie_mvp_2", 24))
+    print(chart_query("jackie_mvp_2", 24))

@@ -54,12 +54,12 @@ def humidity_main(user, email, time):
     return render_template("humidity_alltime.html", user=user, email=email)
 
 
-@app.route('/humidity/<email>/chart', methods=["POST"])
-def hum_chart(email):
+@app.route('/chart/<email>/<sensor>', methods=["POST"])
+def hum_chart(sensor, email):
 
   db = retrieve_db(email)
   limit = request.get_data()
-  data = chart_query(db[0], int(limit))
+  data = chart_query(db[0], int(limit), sensor)
   
   return data
 

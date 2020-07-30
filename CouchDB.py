@@ -13,14 +13,14 @@ import json
 from datetime import datetime
 from key import couch_access
 
-def chart_query(db_name, limit):
+def chart_query(db_name, limit, sensor):
     
     server = couch_access()
     db = server[db_name]
     result = {}
 
     payload={"selector":{"status.status_qualifier":"Success", "activity_type":"Environment_Observation", 
-             "subject.name":"Air","subject.attribute.name": "Humidity"}, "fields":["start_date.timestamp", "subject.attribute.value"],
+             "subject.name":"Air","subject.attribute.name": str(sensor)}, "fields":["start_date.timestamp", "subject.attribute.value"],
              "sort":[{"start_date.timestamp":"desc"}], "limit":int(limit)}     
 
     data = db.find(payload)

@@ -2,95 +2,25 @@
 <html>
 
   <head>
+    <link rel="stylesheet" href="/static/style/nav_bar.css">
+    <link rel="stylesheet" href="/static/style/chart.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="/static//javascript/chart.js"></script>
     <style>
-      .NavBar{
+      .chart{
         position: absolute;
-        float: left;
-        width: 85px;
-        height: 1105px;
-        left: 0px;
-        top: 0px;
+        width: 1230px;
+        height: 700px;
+        left: 10%;
+        top: 10%;
       }
-      .background{
+      .gray_box{
         position: absolute;
-        left: 0%;
-        right: 0%;
-        top: 0%;
-        bottom: 0%;
-      }
-      .icon{
-        position: absolute;
-        left: 23.53%;
-        right: 27.06%;
-        top: 1.36%;
-        bottom: 94.84%;
-      }
-      .home{
-        position: absolute;
-        left: 23.53%;
-        right: 27.06%;
-        top: 7.24%;
-        bottom: 88.96%;
-      }
-      .humidity{
-        position: absolute;
-        left: 23.53%;
-        right: 27.06%;
-        top: 12.31%;
-        bottom: 83.89%;
-      }
-      .co2{
-        position: absolute;
-        left: 23.53%;
-        right: 27.06%;
-        top: 17.38%;
-        bottom: 78.82%;
-      }
-      .temperature{
-        position: absolute;
-        left: 23.53%;
-        right: 27.06%;
-        top: 22.44%;
-        bottom: 73.76%;
-      }
-      .picture{
-        position: absolute;
-        left: 23.53%;
-        right: 27.06%;
-        top: 27.51%;
-        bottom: 68.69%;
-      }
-      .experiment{
-        position: absolute;
-        left: 23.53%;
-        right: 27.06%;
-        top: 32.58%;
-        bottom: 63.62%;
-      }
-      .setting{
-        position: absolute;
-        left: 23.53%;
-        right: 27.06%;
-        top: 37.65%;
-        bottom: 58.55%;
-      }
-      .user{
-        position: absolute;
-        left: 24.71%;
-        right: 25.88%;
-        top: 94.57%;
-        bottom: 1.63%;
-      }
-      .content{
-        position: absolute;
-        left: 45%;
-        top: 20%;
-      }
-      .table{
-        position: absolute;
-        left: 40%;
-        top: 40%;
-        max-width: 450px;
+        width: 66px;
+        height: 27px;
+        left: 74%;
+        top: 2.5%;
       }
     </style>
   </head>
@@ -102,7 +32,7 @@
       <img src="/static/navigation/icon.svg" class="icon"/>
       <a href="/reception/{{user}}/{{email}}"><img src="/static/navigation/home_white.svg" class="home"/></a>
       <a href="/humidity/{{user}}/{{email}}/24"><img src="/static/navigation/humidity.svg" class="humidity"/></a>
-      <a href="/co2/{{user}}/{{email}}"><img src="/static/navigation/co2.svg" class="co2"/></a>
+      <a href="/co2/{{user}}/{{email}}/24"><img src="/static/navigation/co2.svg" class="co2"/></a>
       <img src="/static/navigation/temperature_red.svg" class="temperature"/></a>
       <a href="/picture/{{user}}/{{email}}"><img src="/static/navigation/picture.svg" class="picture"/></a>
       <a href="/experiment/{{user}}/{{email}}"><img src="/static/navigation/experiment.svg" class="experiment"/></a>
@@ -110,13 +40,21 @@
       <img src="/static/navigation/profile.svg" class="user"/>
     </div>
 
-    <div class="content">
-      <a href="/temperature/{{user}}/{{email}}/24"><button>24 hour records</button></a>
-      <a href="/temperature/{{user}}/{{email}}/128"><button>7 days records</button></a>
-    </div>
+    <a href="/reception/{{user}}/{{email}}"><img src="/static/navigation/backbutton.svg" class="back"></a>
+    <img src="/static/navigation/top_bar.svg" class="top_bar">
+    <img src="/static/svg_chart/Temperature.svg" class="title">
+    <img src="/static/svg_chart/switch.svg" class="switch">
+    <img src="/static/svg_chart/gray_box.svg" class="gray_box">
+    <img src="/static/svg_chart/text1.svg" class="text1">
+    <img src="/static/svg_chart/text2.svg" class="text2">
+    <a href="/temperature/{{user}}/{{email}}/168"><img src="/static/svg_chart/text3.svg" class="text3"></a>
+    <a href="/temperature/{{user}}/{{email}}/all"><img src="/static/svg_chart/text4.svg" class="text4"></a>
 
-    <div class="table">
-      {{ result }}
+    <div class="chart">
+      <canvas id="myChart"></canvas>
+      <script>
+        charting("{{email}}", "24", "Temperature");
+      </script>
     </div>
       
   </body>

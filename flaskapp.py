@@ -53,6 +53,25 @@ def humidity_main(user, email, time):
   elif time == "all":
     return render_template("humidity_alltime.html", user=user, email=email)
 
+#serve the temperature dashboard
+@app.route('/temperature/<user>/<email>/<time>')
+def temperature(user, email, time):
+  if time == "24":
+    return render_template("temperature.html", user=user, email=email)
+  elif time == "168":
+    return render_template("temperature_7days.html", user=user, email=email)
+  elif time == "all":
+    return render_template("temperature_alltime.html", user=user, email=email)
+
+#serve the co2 dashboard
+@app.route('/co2/<user>/<email>/<time>')
+def co2(user, email, time):
+  if time == "24":
+    return render_template("co2.html", user=user, email=email)
+  elif time == "168":
+    return render_template("co2_7days.html", user=user, email=email)
+  elif time == "all":
+    return render_template("co2_alltime.html", user=user, email=email)
 
 @app.route('/chart/<email>/<sensor>', methods=["POST"])
 def hum_chart(sensor, email):
@@ -60,32 +79,6 @@ def hum_chart(sensor, email):
   db = retrieve_db(email)
   limit = request.get_data()
   data = chart_query(db[0], int(limit), sensor)
-  
-  return data
-
-#serve the temperature dashboard
-@app.route('/temperature/<user>/<email>')
-def temperature(user, email):
-  return render_template("temperature.html", user=user, email=email)
-
-@app.route('/temperature/<user>/<email>/<limit>')
-def rec_temperature(user, email, limit):
-  db = retrieve_db(email)
-  
-  result = tmp_rec(db[0], limit)
-  
-  return render_template("temperature.html", user=user, email=email, result=result)
-
-#serve the co2 dashboard
-@app.route('/co2/<user>/<email>')
-def co2(user, email):
-  return render_template("co2.html", user=user, email=email)
-
-@app.route('/co2/<user>/<email>', methods=["POST"])
-def co2_chart(user, email):
-
-  limit = request.get_data()
-  data = chart_query("jackie_mvp_2", int(limit))
   
   return data
 

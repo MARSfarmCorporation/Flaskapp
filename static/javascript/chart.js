@@ -1,8 +1,8 @@
-function charting(email, duration){
+function charting(email, duration, sensor){
 
     var response = $.ajax({
         type: "POST",
-        url: "/humidity/" + email + "/chart",
+        url: "/chart/" + email + "/" + sensor,
         data: duration,
         async: false,
         dataType: "text"

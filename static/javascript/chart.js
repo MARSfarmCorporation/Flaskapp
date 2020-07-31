@@ -21,7 +21,7 @@ function charting(email, duration, sensor){
     for(var i=0; i< value.length; i++){
       value[i] = parseFloat(value[i])
       if(value[i] > 10000){
-        value[i] = 400;
+        value[i] = value[i - 1];
       }
     }
 

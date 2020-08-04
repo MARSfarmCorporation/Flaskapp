@@ -10,11 +10,7 @@
         left: 119px;
         top: 14%;
       }
-      .signin{
-        position:absolute;
-        right: 0.5%;
-        top: 0.5%;
-      }
+
     </style>
     <link rel="stylesheet" href="/static/style/nav_bar.css">
     <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
@@ -37,29 +33,11 @@
     </div>
 
     <img src="{{link}}" class="img_preview">
+    <img src="/static/navigation/backbutton.svg" class="back">
+    <img src="/static/navigation/top_bar.svg" class="top_bar">
 
-    <div class="signin">
-    <div id="my-signin2" class="signin"></div>
-    </div>
 
-    <script>
-      function onSignIn(googleUser) {
-        var profile = googleUser.getBasicProfile();
-        var name = profile.getName();
-        var email = profile.getEmail();  
-      }
-
-      function renderButton() {
-        gapi.signin2.render('my-signin2', {
-          'scope': 'profile email',
-          'width': 120,
-          'height': 25,
-          'longtitle': true,
-          'theme': 'dark',
-          'onsuccess': onSignIn,
-        });
-      }
-    </script>     
+    
   </body>
 
 </html>

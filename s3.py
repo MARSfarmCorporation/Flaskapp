@@ -20,11 +20,16 @@ def get_28_days(bucket):
     count = 0
     result = []
 
-    for item in s3.list_objects(Bucket=bucket)['Contents']:
+    get_last = lambda obj: obj['Key']
+   
+    objs = s3.list_objects_v2(Bucket=bucket)['Contents']
+    for obj in sorted(objs, key=get_last, reverse = True):
         if count % 12 == 0:
-            result.insert(0, item['Key'])
+            result.append(obj['Key'])
         count+=1
-    
+        if len(result) == 28:
+            break
+
     while len(result) < 28:
         result.append("None")
 

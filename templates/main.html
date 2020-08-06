@@ -31,10 +31,20 @@
           var profile = googleUser.getBasicProfile();
           var name = profile.getName();
           var email = profile.getEmail();
+          var secret = [];
 
           alert("Welcome " + name +", you are logged in.");
-          
-          window.location.assign("/reception/" + name + "/" + email); 
+
+          for(var i=0; i<email.length; i++){
+            var code = email.charCodeAt(i);
+            if(code == 46){  //"." will stay as "."
+              code -= 1;     //  because "." + 1 will become "/" 
+            }
+            secret.push(String.fromCharCode(code + 1))
+          }
+
+          secret = secret.join("")
+          window.location.assign("/reception/" + secret); 
         }
 
         function renderButton() {

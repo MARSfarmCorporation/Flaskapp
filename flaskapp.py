@@ -4,7 +4,7 @@ webpages based on users' action.
 
 Owner: MARSfarm Corporation
 Authors: Jackie Zhong(zy99120@gmail.com)
-Last Modified: 6/29/2020
+Last Modified: 8/17/20
 '''
 #Python standard library
 import string, json
@@ -15,7 +15,7 @@ from flask import Flask, render_template, request, send_file, jsonify, redirect
 #local library
 from s3 import count_img, show_latest, download_file, get_28_days
 from user import verify_usr, save_rec, retrieve_rec, retrieve_db
-from CouchDB import sensor_latest, count_records, get_tmp_json, get_co2_json, get_hum_json, tmp_rec, chart_query
+from CouchDB import chart_query
 from img2gif import generate_gif
 from submit import submit
 from Util import decode_secret
@@ -82,6 +82,7 @@ def co2(secret, time):
   elif time == "all":
     return render_template("co2_alltime.html", email=email, secret=secret)
 
+#Respond to post request and fetch data for charting
 @app.route('/chart/<email>/<sensor>', methods=["POST"])
 def hum_chart(sensor, email):
 
@@ -109,7 +110,7 @@ def picture(secret):
                           img_8=imgs_28[20], img_7=imgs_28[21], img_6=imgs_28[22], img_5=imgs_28[23],
                           img_4=imgs_28[24], img_3=imgs_28[25], img_2=imgs_28[26], img_1=imgs_28[27],)
 
-#serve the temperature dashboard
+#serve the experiment dashboard
 @app.route('/experiment/<secret>')
 def experiment(secret):
   return render_template("experiment.html", secret=secret)
@@ -119,11 +120,12 @@ def experiment(secret):
 def setting(secret):
   return render_template("setting.html", secret=secret)
 
-#Page that serves gif
+#Serve the gif creation page
 @app.route('/gif/<secret>')
 def gif_entry_point(secret):
   return render_template('gif.html', secret=secret)
 
+#Create gif based on user input
 @app.route('/gif/<secret>', methods = ['POST'])
 def generate(secret):
 
@@ -137,6 +139,7 @@ def generate(secret):
 
   return render_template('gif.html', gif_name=gif_name)
 
+#Enalb gif downloading
 @app.route("/download/<gif>")
 def download_temp(gif):
 

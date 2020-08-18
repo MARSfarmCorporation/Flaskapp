@@ -2,12 +2,12 @@
 <html>
 
   <head>
-    <link rel="stylesheet" href="/static/style/nav_bar.css">
-    <link rel="stylesheet" href="/static/style/chart.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="/static//javascript/chart.js"></script>
-    <style>
+    <link rel="stylesheet" href="/static/style/nav_bar.css"> // pull in the CSS styling for the navigation bar from FlaskApp
+    <link rel="stylesheet" href="/static/style/chart.css"> // pull in the CSS styling for charting pages from FlaskApp
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script> // pull in referenced library
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> // pull in referenced library
+    <script src="/static//javascript/chart.js"></script> // pull in the JavaScript from static.chart.js on FlaskApp
+    <style> // this style section is actually just defining the header, not the chart itself.
       .chart{
         position: absolute;
         width: 1230px;
@@ -26,8 +26,8 @@
   </head>
 
   <body>
-
-    <div class="NavBar">
+// all icons and interactions for navigation bar menu
+    <div class="NavBar"> 
       <img src="/static/navigation/background.svg" class="background"/>
       <img src="/static/navigation/icon.svg" class="icon"/>
       <a href="/reception/{{secret}}"><img src="/static/navigation/home_white.svg" class="home"/></a>
@@ -40,6 +40,7 @@
       <img src="/static/navigation/profile.svg" class="user"/>
     </div>
 
+// all icons and interactions for chart page items https://github.com/MARSfarmCorporation/Flaskapp/blob/master/static/style/chart.css
     <a href="/reception/{{secret}}"><img src="/static/navigation/backbutton.svg" class="back"></a>
     <img src="/static/navigation/top_bar.svg" class="top_bar">
     <img src="/static/svg_chart/Humidity.svg" class="title">
@@ -50,8 +51,6 @@
     <a href="/humidity/{{secret}}/168"><img src="/static/svg_chart/text3.svg" class="text3"></a>
     <a href="/humidity/{{secret}}/all"><img src="/static/svg_chart/text4.svg" class="text4"></a>
     
-    
-
     <div class="chart">
       <canvas id="myChart"></canvas>
       <script>

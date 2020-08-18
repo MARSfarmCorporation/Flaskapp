@@ -1,64 +1,54 @@
 <!DOCTYPE html>
 <html>
+<head>
+<title>Page Title</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
+</head>
+<body>
+<canvas id="line-chart" width="800" height="450"></canvas>
+<script>
 
-  <head>
-    <link rel="stylesheet" href="/static/style/nav_bar.css"> // pull in the CSS styling for the navigation bar from FlaskApp
-    <link rel="stylesheet" href="/static/style/chart.css"> // pull in the CSS styling for charting pages from FlaskApp
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script> // pull in referenced library
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> // pull in referenced library
-    <script src="/static//javascript/chart.js"></script> // pull in the JavaScript from static.chart.js on FlaskApp
-    <style> // this style section is actually just defining the header, not the chart itself.
-      .chart{
-        position: absolute;
-        width: 1230px;
-        height: 700px;
-        left: 10%;
-        top: 10%;
+Chart.defaults.global.defaultFontSize = 16;
+
+
+
+new Chart(document.getElementById("line-chart"), {
+  type: 'line',
+  data: {
+    labels: ["12:00 AM","1:00 AM","2:00 AM","3:00 AM","4:00 AM","5:00 AM","6:00 AM","7:00 AM","8:00 AM","9:00 AM","10:00 AM","11:00 AM","12:00 PM","1:00 PM","2:00 PM","3:00 PM","4:00 PM","5:00 PM","6:00 PM","7:00 PM","8:00 PM","9:00 PM","10:00 PM","11:00 PM"],
+    datasets: [{ 
+        data: [73,76,70,50,52,49,47,47,70,68,71,74,79,62,64,65,72,40,53,65,47,66,72,56],
+        label: "% of Humidity",
+        borderColor: "#3e95cd",
+        fill: false
       }
-      .gray_box{
-        position: absolute;
-        width: 66px;
-        height: 27px;
-        left: 74%;
-        top: 2.5%;
-      }
-    </style>
-  </head>
-
-  <body>
-// all icons and interactions for navigation bar menu
-    <div class="NavBar"> 
-      <img src="/static/navigation/background.svg" class="background"/>
-      <img src="/static/navigation/icon.svg" class="icon"/>
-      <a href="/reception/{{secret}}"><img src="/static/navigation/home_white.svg" class="home"/></a>
-      <img src="/static/navigation/humidity_blue.svg" class="humidity"/>
-      <a href="/co2/{{secret}}/24"><img src="/static/navigation/co2.svg" class="co2"/></a>
-      <a href="/temperature/{{secret}}/24"><img src="/static/navigation/temperature.svg" class="temperature"/></a>
-      <a href="/picture/{{secret}}"><img src="/static/navigation/picture.svg" class="picture"/></a>
-      <a href="/experiment/{{secret}}"><img src="/static/navigation/experiment.svg" class="experiment"/></a>
-      <a href="/setting/{{secret}}"><img src="/static/navigation/setting.svg" class="setting"/></a>
-      <img src="/static/navigation/profile.svg" class="user"/>
-    </div>
-
-// all icons and interactions for chart page items https://github.com/MARSfarmCorporation/Flaskapp/blob/master/static/style/chart.css
-    <a href="/reception/{{secret}}"><img src="/static/navigation/backbutton.svg" class="back"></a>
-    <img src="/static/navigation/top_bar.svg" class="top_bar">
-    <img src="/static/svg_chart/Humidity.svg" class="title">
-    <img src="/static/svg_chart/switch.svg" class="switch">
-    <img src="/static/svg_chart/gray_box.svg" class="gray_box">
-    <img src="/static/svg_chart/text1.svg" class="text1">
-    <img src="/static/svg_chart/text2.svg" class="text2">
-    <a href="/humidity/{{secret}}/168"><img src="/static/svg_chart/text3.svg" class="text3"></a>
-    <a href="/humidity/{{secret}}/all"><img src="/static/svg_chart/text4.svg" class="text4"></a>
-    
-    <div class="chart">
-      <canvas id="myChart"></canvas>
-      <script>
-        charting("{{email}}", "24", "Humidity");
-      </script>
-    </div>
-
-  </body>
-
+    ]
+  },
+  
+  options: {
+    title: {
+      display: true,
+      text: 'Average Humidty'
+    },
+    scales: {
+      xAxes: [{
+               gridLines: {
+                  display: false
+               }
+            }],
+            yAxes: [{
+               gridLines: {
+                  drawOnChartArea: false,
+                  lineWidth: 0,
+                  
+                  drawTicks: false,
+                  tickMarkLength: 50
+                 
+               }
+            }]
+            }
+  }
+});
+   </script>
+</body>
 </html>
-

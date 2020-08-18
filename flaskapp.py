@@ -10,14 +10,13 @@ Last Modified: 8/17/20
 import string, json
 
 #Third party library
-from flask import Flask, render_template, request, send_file, jsonify, redirect
+from flask import Flask, render_template, request, send_file
 
 #local library
-from s3 import count_img, show_latest, download_file, get_28_days
-from user import verify_usr, save_rec, retrieve_rec, retrieve_db
+from s3 import show_latest, get_28_days
+from user import verify_usr, retrieve_rec, retrieve_db
 from CouchDB import chart_query
 from img2gif import generate_gif
-from submit import submit
 from Util import decode_secret
 
 app = Flask(__name__)
@@ -41,9 +40,9 @@ def usr_main(secret):
     return render_template("new.html")
   else:
     data = retrieve_rec(email)
-    latest = show_latest(data[1])
-    s3 = data[2]
-    link = s3 + latest
+    latest_object = show_latest(data[1])
+    s3_url = data[2]
+    link = s3_url + latest_object #generate the complete url to an s3 object
     return render_template("reception.html", secret=secret, link=link)
 
 #serve the humidity dashboard
@@ -86,9 +85,10 @@ def co2(secret, time):
 @app.route('/chart/<email>/<sensor>', methods=["POST"])
 def hum_chart(sensor, email):
 
-  db = retrieve_db(email)
-  limit = request.get_data()
-  data = chart_query(db[0], int(limit), sensor)
+  rec = retrieve_rec(email)
+  db = rec[0]
+  limit = request.get_data() #retrieve query limit sent from chart.js
+  data = chart_query(db, int(limit), sensor)
   
   return data
 

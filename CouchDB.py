@@ -20,16 +20,21 @@ def chart_query(db_name, limit, sensor):
     db = server[db_name]
     result = {}
 
+    #Mango query format used by CouchDB
     payload={"selector":{"status.status_qualifier":"Success", "activity_type":"Environment_Observation", 
              "subject.name":"Air","subject.attribute.name": str(sensor)}, "fields":["start_date.timestamp", "subject.attribute.value"],
              "sort":[{"start_date.timestamp":"desc"}], "limit":int(limit)}     
 
     data = db.find(payload)
 
+    #Associate each timestamp with its value
     for row in data:
         result[row["start_date"]["timestamp"]] = row["subject"]["attribute"]["value"]
 
     return result
+
+'''
+BACKLOG CODE NOT IN ACTIVE USE
 
 #return the number of records in the database
 def count_records(db_name):
@@ -121,7 +126,7 @@ def sensor_latest(db_name):
         li.append(row["subject"]["attribute"]["value"])
     
     return li
-
+'''
     
 
 if __name__ == "__main__":

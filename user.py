@@ -11,12 +11,14 @@ from couchdb import Server
 from key import couch_access
 import json
 
+#Verify whether a user exist or not by looking up email in CouchDB
 def verify_usr(email):
 
     server = couch_access()
     db_name = "users"
     db = server[db_name]
 
+    #Mango query
     payload={"selector":{"Email":email}, "limit": 1}
     
     data = db.find(payload)
@@ -26,24 +28,19 @@ def verify_usr(email):
     else:
         return "exist"
 
-
-def save_rec(name, email, school, device):
-
-    server = couch_access()
-    db_name = "users"
-    db = server[db_name]
-    doc_id, doc_rev = db.save({"Name": name, "Email": email, "School": school, "Device": device})
-
+#Retrieve fields from user profile given his email
 def retrieve_rec(email):
 
     server = couch_access()
     db_name = "users"
     db = server[db_name]
 
+    #Mango query
     payload={"selector":{"Email":email}, "limit": 1}
 
     data = db.find(payload)
 
+    #Put needed fields in list to return conveniently
     result = []
     for row in data:
         result.append(row["Database"])
@@ -52,12 +49,14 @@ def retrieve_rec(email):
     
     return result
 
+#Retrieve just the database from user profile given email
 def retrieve_db(email):
 
     server = couch_access()
     db_name = "users"
     db = server[db_name]
 
+    #Mango Query
     payload={"selector":{"Email":email}, "limit": 1}
 
     data = db.find(payload)
@@ -68,6 +67,16 @@ def retrieve_db(email):
     
     return result
 
+'''
+BACKLOG CODE NOT IN ACTIVE USE
 
+#save a user record given name, email, school, and device
+def save_rec(name, email, school, device):
+
+    server = couch_access()
+    db_name = "users"
+    db = server[db_name]
+    doc_id, doc_rev = db.save({"Name": name, "Email": email, "School": school, "Device": device})
+'''
 if __name__ == "__main__":
     print(retrieve_db("jackie@marsfarm.io")[0])

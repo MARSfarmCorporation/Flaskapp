@@ -18,7 +18,7 @@ def decode_secret(secret):
 
     for char in secret:
         code = ord(char)
-        if code is 46:
+        if code is 46: #"." is an exception
             code += 1
 
         result += chr((code - 1))

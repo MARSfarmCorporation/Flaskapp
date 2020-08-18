@@ -14,6 +14,7 @@ import boto3
 from key import s3_access
 import string
 
+#get 28 images, theoratically one from each day
 def get_28_days(bucket):
 
     s3 = s3_access()
@@ -30,21 +31,11 @@ def get_28_days(bucket):
         if len(result) == 28:
             break
 
+    #if there are less than so many days, fill with none
     while len(result) < 28:
         result.append("None")
 
     return result
-
-#count number of images in a given bucket
-def count_img(bucket):
-    
-    s3 = s3_access()
-    count = 0
-	
-    for item in s3.list_objects(Bucket=bucket)['Contents']:
-        count+=1
-    
-    return count
 
 #get the name of the latest images sorted by name
 def show_latest(bucket):
@@ -57,6 +48,22 @@ def show_latest(bucket):
 
    return last_added
 
+'''
+BACKLOG CODE NOT IN ACTIVE USE
+
+#count number of images in a given bucket
+def count_img(bucket):
+    
+    s3 = s3_access()
+    count = 0
+	
+    for item in s3.list_objects(Bucket=bucket)['Contents']:
+        count+=1
+    
+    return count
+
+
+
 #download a given image from a given bucket
 def download_file(file_name, bucket):
 
@@ -67,7 +74,7 @@ def download_file(file_name, bucket):
 
     output = "/home/ubuntu/flaskapp/static/images/" + name
     s3.download_file(bucket, file_name, output)
-
+'''
 
 
 if __name__ == "__main__":

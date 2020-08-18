@@ -18,6 +18,7 @@ def generate_gif(interval, bucket):
 
     s3 = s3_access()
     
+    #download images based on interval given
     count = -1
     for item in s3.list_objects(Bucket=bucket)['Contents']:
         if(count % int(interval) == 0):
@@ -25,7 +26,6 @@ def generate_gif(interval, bucket):
             output = '/home/ubuntu/flaskapp/static/gif_repo/' + filename[-1]
             s3.download_file(bucket, item['Key'], output)
         count+=1
-
 
     images = []
     for image in sorted(os.listdir("/home/ubuntu/flaskapp/static/gif_repo")):

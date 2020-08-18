@@ -1,5 +1,6 @@
 function charting(email, duration, sensor){
 
+    //send request to backent to get data
     var response = $.ajax({
         type: "POST",
         url: "/chart/" + email + "/" + sensor,
@@ -8,6 +9,8 @@ function charting(email, duration, sensor){
         dataType: "text"
     }).responseText;
     
+    //parse data into two array
+    //one for timestamp, one for value
     var dict = JSON.parse(response);
     var time = [];
     var value = [];
@@ -18,6 +21,8 @@ function charting(email, duration, sensor){
         }
     }
 
+    //deal with outliers(>10000) by let it
+    //equal to the previous one
     for(var i=0; i< value.length; i++){
       value[i] = parseFloat(value[i])
       if(value[i] > 10000){
@@ -25,9 +30,10 @@ function charting(email, duration, sensor){
       }
     }
 
+    //request one week chart
     if (duration == "168"){
         for(var i=0; i < time.length; i++){
-            var res = time[i].split("T", 2)
+            var res = time[i].split("T", 2)//Split timestamp to get just the date
             time[i] = res[0]
         }
         
@@ -38,7 +44,7 @@ function charting(email, duration, sensor){
         date_7.push(time[time.length-1])
         value_7.push(value[value.length-1])
         for(var i = time.length - 1; i > 0; i--){
-          if(time[i] == time[i - 1]){
+          if(time[i] == time[i - 1]){ //If two adjacent value are from same day, add them together
             value_7[0] += value[i - 1];
             count+=1;
           }
@@ -46,18 +52,19 @@ function charting(email, duration, sensor){
             if(day == 0){
               break;
             }
-            value_7[0] = value_7[0] / count;
+            value_7[0] = value_7[0] / count;//If not, get the average of the added value. 
             value_7.unshift(value[i - 1]);
             count = 1;
             date_7.unshift(time[i - 1]);
             day-=1;
           }
         }
-        value_7[0] = value_7[0] / count;
+        value_7[0] = value_7[0] / count; //Take care of edge case
         time = date_7;
         value = value_7;
     }
 
+    //request all-time chart
     var date_all = [];
     var value_all = [];
     var max = [];
@@ -65,7 +72,7 @@ function charting(email, duration, sensor){
     var count = 1;
     if (duration == "100000") {
       for(var i=0; i < time.length; i++){
-        var res = time[i].split("T", 2)
+        var res = time[i].split("T", 2) //Split timestamp to get just the date
         time[i] = res[0]
       }
       date_all.push(time[time.length-1]);
@@ -75,17 +82,17 @@ function charting(email, duration, sensor){
       
       for(var i = time.length - 1; i > 0; i--){
         if(time[i] == time[i - 1]){
-          value_all[0] += value[i - 1];
+          value_all[0] += value[i - 1]; //If two adjacent value are from same day, add them together
           count += 1;
-          if (value[i - 1] > max[0]){
+          if (value[i - 1] > max[0]){ //Track max
             max[0] = value[i - 1];
           }
-          if (value[i - 1] < min[0]){
+          if (value[i - 1] < min[0]){ //Track min
             min[0] = value[i - 1];
           }
         }
         else{
-          value_all[0] = value_all[0] / count;
+          value_all[0] = value_all[0] / count;//If not, get the average of the added value. 
           value_all.unshift(value[i - 1]);
           min.unshift(value[i - 1]);
           max.unshift(value[i - 1]);
@@ -94,11 +101,12 @@ function charting(email, duration, sensor){
           date_all.unshift(time[i - 1]);
         }
       }
-      value_all[0] = value_all[0] / count;
+      value_all[0] = value_all[0] / count; //take care of edge case
       value = value_all;
       time = date_all;
     }
 
+    //Creating the chart
     var ctx = document.getElementById('myChart').getContext('2d');
     var myChart = new Chart(ctx, {
         type: 'line',

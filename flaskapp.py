@@ -83,7 +83,7 @@ def co2(secret, time):
 
 #Respond to post request and fetch data for charting
 @app.route('/chart/<email>/<sensor>', methods=["POST"])
-def hum_chart(sensor, email):
+def get_chart_data(sensor, email):
 
   rec = retrieve_rec(email)
   db = rec[0]

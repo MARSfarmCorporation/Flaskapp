@@ -21,7 +21,7 @@ function charting(email, duration, sensor){
         }
     }
 
-    //deal with outliers(>10000) by let it
+    //deal with CO2 outliers(>10000) by let it
     //equal to the previous one
     for(var i=0; i< value.length; i++){
       value[i] = parseFloat(value[i])
@@ -106,21 +106,25 @@ function charting(email, duration, sensor){
       time = date_all;
     }
 
-    //Creating the chart
+    //Building the chart
     var ctx = document.getElementById('myChart').getContext('2d');
     var myChart = new Chart(ctx, {
         type: 'line',
         data: {
             labels: time,
-            datasets: [{
-            data: value,
-            backgroundColor: "rgba(153,255,51,0.4)"
+            datasets: [
+            { 
+              data: value,
+              label: "average",
+              backgroundColor: "rgba(153,255,51,0.4)"
             },
             {
-              data: min
+              data: min,
+              label: "min"
             },
             {
-              data: max
+              data: max,
+              label: "max"
             }
           ]
         }

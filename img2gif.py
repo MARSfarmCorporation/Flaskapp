@@ -27,6 +27,7 @@ def generate_gif(interval, bucket):
             s3.download_file(bucket, item['Key'], output)
         count+=1
 
+    #Put images into a list
     images = []
     for image in sorted(os.listdir("/home/ubuntu/flaskapp/static/gif_repo")):
         path = "/home/ubuntu/flaskapp/static/gif_repo/" + image
@@ -38,6 +39,8 @@ def generate_gif(interval, bucket):
         out.append(rimg)
 
     gif_name = bucket + "_" + str(interval) + ".gif"
+
+    #This line actually generates the gif from the list of images
     out[0].save("/home/ubuntu/flaskapp/static/gif/" + gif_name, save_all=True, append_images=out[1:], duration=200, loop=0)
 
     return gif_name

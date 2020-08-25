@@ -20,7 +20,7 @@ def chart_query(db_name, limit, sensor):
     db = server[db_name]
     result = {}
 
-    #Mango query format used by CouchDB
+    #Mango Query: limit and subject.attribute.name(CO2, Humidity, or Temperature) are dynamic so all charts can use this function
     payload={"selector":{"status.status_qualifier":"Success", "activity_type":"Environment_Observation", 
              "subject.name":"Air","subject.attribute.name": str(sensor)}, "fields":["start_date.timestamp", "subject.attribute.value"],
              "sort":[{"start_date.timestamp":"desc"}], "limit":int(limit)}     

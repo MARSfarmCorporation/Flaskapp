@@ -18,7 +18,7 @@ def verify_usr(email):
     db_name = "users"
     db = server[db_name]
 
-    #Mango query
+    #Mango query: get one record that has the same email
     payload={"selector":{"Email":email}, "limit": 1}
     
     data = db.find(payload)
@@ -35,7 +35,7 @@ def retrieve_rec(email):
     db_name = "users"
     db = server[db_name]
 
-    #Mango query
+    #Mango query: get one record that has the same email
     payload={"selector":{"Email":email}, "limit": 1}
 
     data = db.find(payload)
@@ -56,7 +56,7 @@ def retrieve_db(email):
     db_name = "users"
     db = server[db_name]
 
-    #Mango Query
+    #Mango query: get one record that has the same email
     payload={"selector":{"Email":email}, "limit": 1}
 
     data = db.find(payload)

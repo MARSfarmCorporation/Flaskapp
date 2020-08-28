@@ -107,10 +107,97 @@ function charting(email, duration, sensor){
     }
 
     //Building the chart
-    var ctx = document.getElementById('myChart').getContext('2d');
-    var myChart = new Chart(ctx, {
+    if (duration=="24"){
+      
+      var borderColor = "#3e95cd";
+      var backgroundColor = "#3e95cd";
+      var title = "N/A";
+      var yLable = "N/A";
+      if (sensor == "Humidity"){
+        borderColor = "#3e95cd";
+        backgroundColor = "#3e95cd";
+        title = "Humidity - Last 24 Hours";
+        yLable = "Humidity";
+      }
+      else if (sensor == "Temperature"){
+        borderColor = "#F55F5F";
+        backgroundColor = "#F55F5F";
+        title = "Temperature - Last 24 Hours";
+        yLable = "Temperature";
+      }
+      else if (sensor == "CO2"){
+        borderColor = "#29BF38";
+        backgroundColor = "#29BF38";
+        title = "Co2 - Last 24 Hours";
+        yLable = "Co2 (in ppm)";
+      }
+
+      var ctx = document.getElementById('myChart');
+      var myChart = new Chart(ctx, {
         type: 'line',
         data: {
+          labels: time,
+          datasets: [
+          { 
+            data: value,
+            label: "Average",
+            borderColor: borderColor,
+            backgroundColor: backgroundColor
+          }  
+          ]
+        },
+        options: {
+          legend: {
+            display: true,
+            labels: {
+              boxWidth: 14, 
+            }
+          },
+          title: {
+            display: true,
+            text: title,
+            fontSize: 22,
+            fontStyle: 'bold'  
+          },
+          scales: {
+            yAxes: [{
+              ticks: {
+                // Include a dollar sign in the ticks
+                callback: function(value, index, values) {
+                  if (sensor == "Humidity"){
+                    return value + '%';
+                  }
+                  else if (sensor == "Temperature"){
+                    return value + '°C';
+                  }
+                  else if (sensor == "CO2"){
+                    return value;
+                  }
+                }
+              },
+              scaleLabel: {
+                display: true,
+                labelString: yLable,
+                fontStyle: 'bold'
+              }
+            }],
+            xAxes: [{
+              scaleLabel: {
+                display: true,
+                labelString: 'Time',
+                fontStyle: 'bold'
+                }
+            }]
+          }
+        }
+      });
+    }
+    else{
+
+      var ctx = document.getElementById('myChart').getContext('2d');
+      var myChart = new Chart(ctx, {
+          type: 'line',
+          data: {
             labels: time,
             datasets: [
             { 
@@ -118,15 +205,18 @@ function charting(email, duration, sensor){
               label: "average",
               backgroundColor: "rgba(153,255,51,0.4)"
             },
+
             {
               data: min,
               label: "min"
             },
+
             {
               data: max,
               label: "max"
             }
           ]
         }
-    });
+      });
+    }
 }

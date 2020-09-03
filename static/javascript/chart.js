@@ -211,8 +211,37 @@ function charting(email, duration, sensor){
         }
       });
     }
-    else{
+    else if(duration=="100000"){
 
+      //set color, title and label based on data type and duration
+      var avg_color = "#FFFFFF";
+      var min_color = "#FFFFFF";
+      var max_color = "#FFFFFF";
+      var title = "N/A";
+      var yLable = "N/A"; 
+      if(sensor == "Humidity"){
+        avg_color = "#42A1F9";
+        min_color = "#9ccefc";
+        max_color = "#0776df";
+        title = "Humidity - Entire Experiment";
+        yLable = "Humidity";
+      }
+      else if(sensor == "Temperature"){
+        avg_color = "#f55f5f";
+        min_color = "#f99f9f";
+        max_color = "#d80e0e";
+        title = "Temperature - Entire Experiment";
+        yLable = "Temperature";
+      }
+      else if(sensor == "CO2"){
+        avg_color = "#29BF38";
+        min_color = "#6ce077";
+        max_color = "#1f932b";
+        title = "Co2 - Entire Experiment";
+        yLable = "Co2";
+      }
+
+      //this piece acutually builds the chart
       var ctx = document.getElementById('myChart').getContext('2d');
       var myChart = new Chart(ctx, {
           type: 'line',
@@ -220,21 +249,73 @@ function charting(email, duration, sensor){
             labels: time,
             datasets: [
             { 
-              data: value,
-              label: "average",
-              backgroundColor: "rgba(153,255,51,0.4)"
+              data: value,      //average data
+              label: "Average",
+              pointStyle: 'circle',
+              backgroundColor: avg_color,
+              borderColor: avg_color
             },
 
             {
-              data: min,
-              label: "min"
+              data: min,    //min data
+              label: "Min",
+              pointStyle: 'rect',
+              backgroundColor: min_color,
+              borderColor: min_color
             },
 
             {
-              data: max,
-              label: "max"
+              data: max,    //max data
+              label: "Max",
+              pointStyle: 'triangle',
+              backgroundColor: max_color,
+              borderColor: max_color
             }
           ]
+        },
+
+        options: {
+          legend: {
+            display: true,
+            labels: {
+              boxWidth: 14, 
+            }
+          },
+          title: {
+           display: true,
+           text: title,
+           fontSize: 22
+          },
+          scales: {
+            yAxes: [{
+              ticks: {
+                // add unit to data depending on data type
+                callback: function(value, index, values) {
+                  if (sensor == "Humidity"){
+                    return value + '%';
+                  }
+                  else if (sensor == "Temperature"){
+                    return value + '°C';
+                  }
+                  else if (sensor == "CO2"){
+                    return value;
+                  }
+                }
+              },
+              scaleLabel: {
+                display: true,
+                labelString: yLable,
+                fontStyle: 'bold'
+              }
+            }],
+            xAxes: [{
+              scaleLabel: {
+                display: true,
+                labelString: 'Time',
+                fontStyle: 'bold'
+              }
+            }]
+          }
         }
       });
     }

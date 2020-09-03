@@ -55,6 +55,14 @@
     <div class="chart">
       <canvas id="myChart"></canvas>
       <script>
+        Chart.defaults.global.defaultFontSize = 14;
+        Chart.defaults.global.defaultFontFamily = "'Roboto'";
+        Chart.defaults.global.elements.point.radius = 6;
+        Chart.defaults.global.elements.line.fill = false;
+        Chart.defaults.global.elements.point.hoverRadius = 8;
+        Chart.Legend.prototype.afterFit = function() {
+          this.height = this.height + 20;
+        };
         charting("{{email}}", "168", "Humidity");
       </script>
     </div>

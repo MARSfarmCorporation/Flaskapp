@@ -106,41 +106,60 @@ function charting(email, duration, sensor){
       time = date_all;
     }
 
-    //Building the chart
-    if (duration=="24"){
+    //Building the 24-hour chart
+    if (duration=="24" || duration=="168"){
       
-      var borderColor = "#3e95cd";
-      var backgroundColor = "#3e95cd";
+      //set color, title and label based on data type and duration
+      var borderColor = "#FFFFFF";
+      var backgroundColor = "#FFFFFF";
       var title = "N/A";
       var yLable = "N/A";
       if (sensor == "Humidity"){
-        borderColor = "#3e95cd";
-        backgroundColor = "#3e95cd";
-        title = "Humidity - Last 24 Hours";
         yLable = "Humidity";
+        if(duration=="24"){
+          borderColor = "#3e95cd";
+          backgroundColor = "#3e95cd";
+          title = "Humidity - Last 24 Hours";
+        }
+        else if(duration=="168"){
+          borderColor = "#42A1F9";
+          backgroundColor = "#42A1F9";
+          title = "Humidity - Last 7 Days";
+        }
       }
       else if (sensor == "Temperature"){
+        yLable = "Temperature";
         borderColor = "#F55F5F";
         backgroundColor = "#F55F5F";
-        title = "Temperature - Last 24 Hours";
-        yLable = "Temperature";
+        if(duration=="24"){
+          title = "Temperature - Last 24 Hours";
+        }
+        else if(duration=="168"){
+          title = "Temperature - Last 7 Days";
+        }
       }
       else if (sensor == "CO2"){
         borderColor = "#29BF38";
         backgroundColor = "#29BF38";
-        title = "Co2 - Last 24 Hours";
         yLable = "Co2 (in ppm)";
+        if(duration=="24"){
+          title = "Co2 - Last 24 Hours";
+        }
+        else if(duration=="168"){
+          title = "Co2 - Last 7 Days"
+        }
       }
 
+      //this part actually builds the chart
       var ctx = document.getElementById('myChart');
       var myChart = new Chart(ctx, {
         type: 'line',
         data: {
-          labels: time,
+          labels: time,  //this line takes in x-axis labels
           datasets: [
           { 
-            data: value,
-            label: "Average",
+            data: value,  //this line takes in data
+            label: "Average", //line label
             borderColor: borderColor,
             backgroundColor: backgroundColor
           }  
@@ -162,7 +181,7 @@ function charting(email, duration, sensor){
           scales: {
             yAxes: [{
               ticks: {
-                // Include a dollar sign in the ticks
+                //Add unit to data based on data type
                 callback: function(value, index, values) {
                   if (sensor == "Humidity"){
                     return value + '%';

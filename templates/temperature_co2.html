@@ -6,7 +6,8 @@
     <link rel="stylesheet" href="/static/style/dashboard_chart.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="/static//javascript/chart.js"></script>
+    <script src="/static/javascript/chart.js"></script>
+    <script src="/static/javascript/compare_chart.js"></script>
     <style>
       .chart{
         position: absolute;
@@ -33,34 +34,35 @@
         top: 2.5%;
       }
     </style>
+    
   </head>
 
   <body>
 
     <div class="NavBar">
-        <img src="/static/navigation/background.svg" class="background"/>
-        <img src="/static/navigation/icon.svg" class="icon"/>
-        <a href="/reception/{{secret}}"><img src="/static/navigation/home_white.svg" class="home"/></a>
-        <a href="/humidity/{{secret}}/24"><img src="/static/navigation/humidity.svg" class="humidity"/></a>
-        <img src="/static/navigation/co2_green.svg" class="co2"/>
-        <a href="/temperature/{{secret}}/24"><img src="/static/navigation/temperature.svg" class="temperature"/></a>
-        <a href="/picture/{{secret}}"><img src="/static/navigation/picture.svg" class="picture"/></a>
-        <a href="/experiment/{{secret}}"><img src="/static/navigation/experiment.svg" class="experiment"/></a>
-        <a href="/setting/{{secret}}"><img src="/static/navigation/setting.svg" class="setting"/></a>
-        <img src="/static/navigation/profile.svg" class="user"/>
-      </div>
+      <img src="/static/navigation/background.svg" class="background"/>
+      <img src="/static/navigation/icon.svg" class="icon"/>
+      <a href="/reception/{{secret}}"><img src="/static/navigation/home_white.svg" class="home"/></a>
+      <a href="/humidity/{{secret}}/24"><img src="/static/navigation/humidity.svg" class="humidity"/></a>
+      <a href="/co2/{{secret}}/24"><img src="/static/navigation/co2.svg" class="co2"/></a>
+      <img src="/static/navigation/temperature_red.svg" class="temperature"/></a>
+      <a href="/picture/{{secret}}"><img src="/static/navigation/picture.svg" class="picture"/></a>
+      <a href="/experiment/{{secret}}"><img src="/static/navigation/experiment.svg" class="experiment"/></a>
+      <a href="/setting/{{secret}}"><img src="/static/navigation/setting.svg" class="setting"/></a>
+      <img src="/static/navigation/profile.svg" class="user"/>
+    </div>
 
     <a href="/reception/{{secret}}"><img src="/static/navigation/backbutton.svg" class="back"></a>
     <img src="/static/navigation/top_bar.svg" class="top_bar">
-    <img src="/static/svg_chart/CO2.svg" class="title">
+    <img src="/static/svg_chart/Temperature.svg" class="title">
     <img src="/static/svg_chart/switch.svg" class="switch">
     <img src="/static/svg_chart/gray_box3.svg" class="gray_box">
     <img src="/static/svg_chart/text1.svg" class="text1">
-    <a href="/co2/{{secret}}/24"><img src="/static/svg_chart/text2.svg" class="text2">
-    <a href="/co2/{{secret}}/168"><img src="/static/svg_chart/text3.svg" class="text3"></a>
+    <a href="/temperature/{{secret}}/24"><img src="/static/svg_chart/text2.svg" class="text2"></a>
+    <a href="/temperature/{{secret}}/168"><img src="/static/svg_chart/text3.svg" class="text3"></a>
     <img src="/static/svg_chart/text4.svg" class="text4">
-    <a href="/co2/{{secret}}/tem"><button type="button" class="comparison1">Compare with Temperature</button></a>
-    <a href="/co2/{{secret}}/hum"><button type="button" class="comparison2">Compare with Humidity</button></a>
+    <button type="button" class="comparison1">Compare with CO2</button>
+    <a href="/temperature/{{secret}}/hum"><button type="button" class="comparison2">Compare with Humidity</button></a>
 
     <div class="chart">
       <canvas id="myChart"></canvas>
@@ -73,7 +75,9 @@
         Chart.Legend.prototype.afterFit = function() {
           this.height = this.height + 20;
         };
-        charting("{{email}}", "100000", "CO2");
+
+        compare_chart("{{email}}", "Temperature", "CO2")        
+
       </script>
     </div>
 

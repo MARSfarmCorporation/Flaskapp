@@ -22,6 +22,16 @@
         left: 78.4%;
         top: 2.5%;
       }
+      .comparison1{
+        position: absolute;
+        left: 50%;
+        top: 2.5%;
+      }
+      .comparison2{
+        position: absolute;
+        left: 35%;
+        top: 2.5%;
+      }
     </style>
   </head>
 
@@ -49,6 +59,8 @@
     <a href="/humidity/{{secret}}/24"><img src="/static/svg_chart/text2.svg" class="text2"></a>
     <img src="/static/svg_chart/text3.svg" class="text3">
     <a href="/humidity/{{secret}}/all"><img src="/static/svg_chart/text4.svg" class="text4"></a>
+    <a href="/humidity/{{secret}}/tem"><button type="button" class="comparison1">Compare with Temperature</button></a>
+    <a href="/humidity/{{secret}}/co2"><button type="button" class="comparison2">Compare with CO2</button></a>
     
     
 

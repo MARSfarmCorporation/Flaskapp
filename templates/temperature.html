@@ -22,6 +22,16 @@
         left: 74%;
         top: 2.5%;
       }
+      .comparison1{
+        position: absolute;
+        left: 50%;
+        top: 2.5%;
+      }
+      .comparison2{
+        position: absolute;
+        left: 35%;
+        top: 2.5%;
+      }
     </style>
   </head>
 
@@ -49,6 +59,8 @@
     <img src="/static/svg_chart/text2.svg" class="text2">
     <a href="/temperature/{{secret}}/168"><img src="/static/svg_chart/text3.svg" class="text3"></a>
     <a href="/temperature/{{secret}}/all"><img src="/static/svg_chart/text4.svg" class="text4"></a>
+    <a href="/temperature/{{secret}}/co2"><button type="button" class="comparison1">Compare with CO2</button></a>
+    <a href="/temperature/{{secret}}/hum"><button type="button" class="comparison2">Compare with Humidity</button></a>
 
     <div class="chart">
       <canvas id="myChart"></canvas>

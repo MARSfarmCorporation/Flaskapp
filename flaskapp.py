@@ -56,6 +56,10 @@ def humidity_main(secret, time):
     return render_template("humidity_7days.html", email=email, secret=secret)
   elif time == "all":
     return render_template("humidity_alltime.html", email=email, secret=secret)
+  elif time == "co2":
+    return render_template("humidity_co2.html", email=email, secret=secret)
+  elif time == "tem":
+    return render_template("humidity_tem.html", email=email, secret=secret)
 
 #serve the temperature dashboard
 @app.route('/temperature/<secret>/<time>')
@@ -68,6 +72,10 @@ def temperature(secret, time):
     return render_template("temperature_7days.html", email=email, secret=secret)
   elif time == "all":
     return render_template("temperature_alltime.html", email=email, secret=secret)
+  elif time == "co2":
+    return render_template("temperature_co2.html", email=email, secret=secret)
+  elif time == "hum":
+    return render_template("temperature_hum.html", email=email, secret=secret)
 
 #serve the co2 dashboard
 @app.route('/co2/<secret>/<time>')
@@ -80,6 +88,10 @@ def co2(secret, time):
     return render_template("co2_7days.html", email=email, secret=secret)
   elif time == "all":
     return render_template("co2_alltime.html", email=email, secret=secret)
+  elif time == "tem":
+    return render_template("co2_tem.html", email=email, secret=secret)
+  elif time == "hum":
+    return render_template("co2_hum.html", email=email, secret=secret)
 
 #Respond to post request and fetch data for charting
 @app.route('/chart/<email>/<sensor>', methods=["POST"])

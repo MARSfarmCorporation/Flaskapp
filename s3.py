@@ -77,5 +77,3 @@ def download_file(file_name, bucket):
 '''
 
 
-if __name__ == "__main__":
-    print(get_28_days("dev-jackie-bucket"))

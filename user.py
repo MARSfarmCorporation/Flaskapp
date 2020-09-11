@@ -78,5 +78,3 @@ def save_rec(name, email, school, device):
     db = server[db_name]
     doc_id, doc_rev = db.save({"Name": name, "Email": email, "School": school, "Device": device})
 '''
-if __name__ == "__main__":
-    print(retrieve_db("jackie@marsfarm.io")[0])

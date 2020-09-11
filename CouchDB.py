@@ -129,5 +129,3 @@ def sensor_latest(db_name):
 '''
     
 
-if __name__ == "__main__":
-    print(chart_query("peter-marsfarm-08052020", "24", "CO2"))

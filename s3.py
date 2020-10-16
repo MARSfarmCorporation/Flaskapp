@@ -8,10 +8,7 @@ to administrator at all time.
 Owner: MARSfarm Corporation
 Authors: Jackie Zhong(zy99120@gmail.com)
 Last Modified: 6/29/2020
-Modified by Peter Webb 10/09/20 -         
-    if count % 12 == 0:
-changed to:
-    if count % 24 == 0:
+Modified by Peter Webb 10/09/20 -   
 '''
 
 import boto3

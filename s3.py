@@ -8,6 +8,7 @@ to administrator at all time.
 Owner: MARSfarm Corporation
 Authors: Jackie Zhong(zy99120@gmail.com)
 Last Modified: 6/29/2020
+Modified by Jackie 10/12/20
 '''
 
 import boto3
@@ -25,7 +26,7 @@ def get_28_days(bucket):
    
     objs = s3.list_objects_v2(Bucket=bucket)['Contents']
     for obj in sorted(objs, key=get_last, reverse = True):
-        if count % 12 == 0:
+        if count % 24 == 0:
             result.append(obj['Key'])
         count+=1
         if len(result) == 28:

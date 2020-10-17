@@ -8,7 +8,11 @@ to administrator at all time.
 Owner: MARSfarm Corporation
 Authors: Jackie Zhong(zy99120@gmail.com)
 Last Modified: 6/29/2020
+<<<<<<< HEAD
 Modified by Jackie 10/12/20
+=======
+Modified by Peter Webb 10/09/20 -   
+>>>>>>> e1bb7b0299d79a48027b46c7f80a561c870d47db
 '''
 
 import boto3
@@ -78,5 +82,8 @@ def download_file(file_name, bucket):
 '''
 
 
+<<<<<<< HEAD
 if __name__ == "__main__":
     print(get_28_days("dev-jackie-bucket"))
+=======
+>>>>>>> e1bb7b0299d79a48027b46c7f80a561c870d47db

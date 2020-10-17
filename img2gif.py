@@ -45,5 +45,4 @@ def generate_gif(interval, bucket):
 
     return gif_name
 
-if __name__ == "__main__":
-    generate_gif(24, "dev-jackie-bucket")
+

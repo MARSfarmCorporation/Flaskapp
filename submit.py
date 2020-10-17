@@ -24,5 +24,3 @@ def submit(row, db_name):
 
     return rec
 
-if __name__ == "__main__":
-    submit(["Phenotype_Observation", '1', '2', '3', '4', '5', '6', '7', '8', '9'])

@@ -78,3 +78,4 @@ def save_rec(name, email, school, device):
     db = server[db_name]
     doc_id, doc_rev = db.save({"Name": name, "Email": email, "School": school, "Device": device})
 '''
+

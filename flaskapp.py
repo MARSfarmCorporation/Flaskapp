@@ -10,20 +10,17 @@ Last Modified: 8/17/20
 import string, json
 
 #Third party library
-from flask import Flask, render_template, request, send_file
+from flask import Flask, render_template, request, send_file, redirect, url_for
 
 #local library
 from s3 import show_latest, get_28_days
-from user import verify_usr, retrieve_rec, retrieve_db
+from user import verify_usr, retrieve_rec, set_default_device, get_record
 from CouchDB import chart_query
 from img2gif import generate_gif
 from Util import decode_secret
 
 app = Flask(__name__)
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
-
-
-
 
 #The starting page
 @app.route('/')
@@ -33,7 +30,6 @@ def entry_point():
 #verify if user exist or not and render page accordingly
 @app.route('/reception/<secret>', methods = ['GET'])
 def usr_main(secret):
-  
   email = decode_secret(secret)
 
   if verify_usr(email) == "new":
@@ -127,10 +123,24 @@ def picture(secret):
 def experiment(secret):
   return render_template("experiment.html", secret=secret)
 
-#serve the setting dashboard
-@app.route('/setting/<secret>')
+#setting dashboard for device selection
+@app.route('/setting/<secret>', methods=['GET', 'POST'])
 def setting(secret):
-  return render_template("setting.html", secret=secret)
+   email = decode_secret(secret)
+   data = retrieve_rec(email)
+   db_name = data[1]
+   if request.method == 'POST':
+       device = request.form['device']
+       #print(device)
+       set_default_device(email, device)
+       return redirect(url_for('entry_point'))
+   record = get_record(email)
+  
+   #list generator, similar to a for loop that goes through device tag in user's JSON record to create a list of device names
+   device_list = [device["Device"]["Name"] for device in record ["Devices"]]
+   #print(device_list)
+   templateData = {"db_name":db_name, "secret":secret, "email":email, "device_list":device_list}
+   return render_template("setting.html", **templateData)
 
 #Serve the gif creation page
 @app.route('/gif/<secret>')
@@ -159,5 +169,3 @@ def download_temp(gif):
     return send_file('/home/ubuntu/flaskapp/static/gif/' + gif, as_attachment=True)
   except Exception as e:
     return str(e)
-
-

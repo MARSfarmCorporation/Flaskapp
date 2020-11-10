@@ -26,6 +26,26 @@
       <img src="/static/navigation/setting_gray.svg" class="setting"/>
       <img src="/static/navigation/profile.svg" class="user"/>
     </div>  
+    
+    <div class="content">
+
+
+{% block content %}
+  <p>Current user: {{email}}</p>
+  <p>Current device: {{db_name}}</p>
+  <p>Select a device and click "Submit' to view:</p>
+	<form method="post">
+	<select name="device" id="device">
+	{% for device in device_list %}
+	<option value={{device}}>{{device}}</option>
+	{% endfor %}
+	</select><br>
+	<input type="submit" value='Submit'>
+	</form>
+{% endblock %}
+
+
+    </div>
   </body>
 
 </html>

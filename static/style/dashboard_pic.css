@@ -19,6 +19,19 @@
     display: flex;
 }
 
+.device_name{
+    position: absolute;
+    left: 23.75%;
+    top: -0.8%;
+
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 24px;
+    line-height: 28px;
+    display: flex;
+}
+
 .img_28{
     position: absolute;
     left: 15%;

@@ -14,15 +14,15 @@ IDE: Download VS Code <https://code.visualstudio.com/download>
 Version control: Install git and clone from github
 Install python (version 3 or higher)
 Install a virtual environment management tool IF you have multiple python projects (optional, helps with dependency versioning)
-Pip (MacOs)/todo:windows package management tool: Standard for python package management - this will already be installed along with pyton or your virtual environment tool
+Pip package management tool: Standard for python package management - this will already be installed along with python or your virtual environment tool.
 Install dependencies: These are listed in requirements.txt.  Execute `pip install -r requirements.txt` from project root if using pip
 
 For testing/deploying to dev & production
 Install putty (certificate management tool)
 Get credentials in the form of ppk file from Peter, and you will use putty to convert to an Amazon pem file.
-for access to aws EC2, use putty from command line to run: puttygen key.ppk -O private-openssh -o key.pem
-A pem file should be generated in the path you specified with this command with name key.pem
-You need to replace the path in IdentityFile with the path to your local pem file in the config
+For access to aws EC2, use putty from command line to run: puttygen key.ppk -O private-openssh -o key.pem
+A pem file should be generated in the path you specified with this command with name key.pem (you can name it anything you like)
+You need to replace the path in IdentityFile with the path to your local pem file in the config which you'll create locally. Use template below to create your config file.
 
 Now SSH in:
 SSH: In extensions search for `Remote - SSH` and install.  Once installed a little green button with arrows >< will appear in the
@@ -34,3 +34,15 @@ To deploy, Open window in “Flask-development”.  Edit and save the files you 
 Then enter command: ‘sudo service apache2 restart’. Verify changes are correct at `dev.marsfarm.io`.
 
 When you deploy, also push changes via git, always make sure you have deployed those changes to Flask-development & the production environment (aws-ec2). and verify they match the git repo.
+
+Example config file:
+
+HOST Flask-production
+    HostName ec2-18-188-159-155.us-east-2.compute.amazonaws.com
+    User ubuntu
+    IdentityFile ~/path_to_your_pem_file/pem_file_name.pem
+
+HOST Flask-development
+    HostName ec2-13-58-137-248.us-east-2.compute.amazonaws.com
+    User ubuntu
+    IdentityFile ~/path_to_your_pem_file/pem_file_name.pem
